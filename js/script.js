@@ -107,7 +107,18 @@ console.log(clicked);
 payment[0].style.display = "none";
 for (let i = 0; i < payment.length; i++){
    if (clicked == "credit card") {
+      creditCardDiv.style.display = '';
       payPalDiv.style.display = 'none';
+      bitcoinDiv.style.display = 'none';
+   } else if (clicked == "paypal") {
+      payPalDiv.style.display = '';
+      creditCardDiv.style.display = 'none';
+      bitcoinDiv.style.display = 'none';
+   } else if (clicked == "bitcoin") {
+      creditCardDiv.style.display = 'none';
+      payPalDiv.style.display = 'none';
+      bitcoinDiv.style.display = '';
+
    }
 }
 
