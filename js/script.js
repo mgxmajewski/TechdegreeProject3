@@ -124,6 +124,7 @@ for (let i = 0; i < payment.length; i++){
 });
 // Validation 
 const form = document.querySelector("form");
+
 const nameValidator = () => {
    const nameVal = name.value;
    console.log(nameVal);
@@ -135,9 +136,28 @@ const nameValidator = () => {
    } 
  }
 
+ const email = document.getElementById('mail');
+ const emailValidator = () => {
+   const emailValue = email.value;
+   console.log(emailValue);
+     const atIndex = emailValue.indexOf('@');
+     const dotIndex = emailValue.lastIndexOf('.');
+     console.log(atIndex, dotIndex);
+     if (atIndex > 1 && dotIndex > atIndex+1 ) {
+         return true;
+     } else {
+         email.style.border = '3px solid red';
+         return false;
+     }
+   }
+
 // event listner for submition with ifs for validation
  form.addEventListener('submit', (e) => {
        if(!nameValidator()){
+         e.preventDefault();
+         console.log(`name validator prevented default submission`);
+       }
+       if(!emailValidator()){
          e.preventDefault();
          console.log(`name validator prevented default submission`);
        }
