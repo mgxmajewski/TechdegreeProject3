@@ -199,8 +199,10 @@ const cardValidator = () => {
    let cardNumberInput = cardNumber.value;
    if (cardNumberRegX.test(cardNumberInput)) {
          console.log(cardNumberInput); 
+         cardNumber.style.border = '2px solid rgb(111, 157, 220)';
          return true;
       } else {
+         cardNumber.style.border = '3px solid red';
          return false;
       }
    }
@@ -209,8 +211,10 @@ const zipValidator = () => {
    let zipInput = zip.value;
    if (zipRegX.test(zipInput)) {
          console.log(zipInput); 
+         zip.style.border = '2px solid rgb(111, 157, 220)';
          return true;
       } else {
+         zip.style.border = '3px solid red';
          return false;
       }
    }
@@ -219,8 +223,10 @@ const cvvValidator = () => {
    let cvvInput = cvv.value;
    if (cvvRegX.test(cvvInput)) {
          console.log(cvvInput); 
+         cvv.style.border = '2px solid rgb(111, 157, 220)';
          return true;
       } else {
+         cvv.style.border = '3px solid red';
          return false;
       }
    }
