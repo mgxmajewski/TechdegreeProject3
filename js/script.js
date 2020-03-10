@@ -55,28 +55,26 @@ designList.addEventListener('change', (e) => {
   }
 });
 
-//checkboxes
+//checkboxes delcaring variables ()
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 console.log(checkboxes);
+let totalCost = 0;
 
+//
 document.querySelector('.activities').addEventListener('change', (e) => {
-   
-  // YOUR CODE GOES HERE!!! Do the steps below to complete this challenge
 const clicked = e.target;
-console.log(clicked);
-  // 1) Create a variable named clicked to store the checkbox input that was just clicked
-  //    - `e.target` will be helpful here
-
-  // 2) Create a variable named clickedType to store the `data-type` attribute of the checkbox that was just clicked
-  //    - the `getAttribute` method will be helpful here
-const clickedType = clicked.getAttribute('data-day-and-time');
-console.log(clickedType);
-  // 3) Log out the two variables you just created to confirm their values
-
-  // 4) Use the `checkboxes` variable that was created for you above, and a `for` loop to iterate over all the checkbox input elements
+const clickedTime = clicked.getAttribute('data-day-and-time');
+const clickedCost = parseInt(clicked.getAttribute('data-cost'));
+  // loop through all checkboxes to exclude conflicts - using logic from warmup 'checkboxes'
+  if (clicked.checked){
+   totalCost += clickedCost;
+  } else { 
+     totalCost -= clickedCost
+  }
+  
   for (let i = 0; i < checkboxes.length; i++) {
-    const checkboxType = checkboxes[i].getAttribute('data-day-and-time');
-    if (clickedType === checkboxType && clicked !== checkboxes[i]) {
+    const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
+    if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
         if(clicked.checked) {
           checkboxes[i].disabled = true;
       } else {
@@ -84,4 +82,10 @@ console.log(clickedType);
       }
     }
    }
+   console.log(totalCost);
+   // for (let i = 0; i < checkboxes.length; i++) {
+   //  if(clicked.checked) {
+   //    totalCost += clickedCost;
+   //  } 
+   // }
 });
