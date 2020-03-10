@@ -62,6 +62,7 @@ const totalCostDiv = document.createElement('p');
 let totalCost = 0;
 checkboxDiv.appendChild(totalCostDiv);
 totalCostDiv.innerHTML = totalCost;
+
 // console.log(checkboxes);
 
 
@@ -86,20 +87,15 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
       }
     }
    }
-   // console.log(totalCost);
-   // for (let i = 0; i < checkboxes.length; i++) {
-   //  if(clicked.checked) {
-   //    totalCost += clickedCost;
-   //  } 
-   // }
    totalCostDiv.innerHTML = "Total: $" + totalCost;
 });
+
 // payment section
 const payment = document.getElementById('payment');
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
-console.log(payment[0]);
+// console.log(payment[0]);
 
 payment.addEventListener('change', (e) =>{
 const clicked = e.target.value;
@@ -122,9 +118,11 @@ for (let i = 0; i < payment.length; i++){
    }
 }
 });
-// Validation 
-const form = document.querySelector("form");
 
+// Validation 
+
+const form = document.querySelector("form");
+//name validation
 const nameValidator = () => {
    const nameVal = name.value;
    console.log(nameVal);
@@ -136,13 +134,14 @@ const nameValidator = () => {
    } 
  }
 
+// email validation
  const email = document.getElementById('mail');
  const emailValidator = () => {
    const emailValue = email.value;
-   console.log(emailValue);
+   // console.log(emailValue);
      const atIndex = emailValue.indexOf('@');
      const dotIndex = emailValue.lastIndexOf('.');
-     console.log(atIndex, dotIndex);
+   //   console.log(atIndex, dotIndex);
      if (atIndex > 1 && dotIndex > atIndex+1 ) {
          return true;
      } else {
@@ -151,16 +150,36 @@ const nameValidator = () => {
      }
    }
 
+// checkbox (at leas one) validation
+const checkboxValidator = () => {
+   for (let i = 0; i < checkboxes.length; i++){
+      if (checkboxes[i].checked == true) {
+         return true;
+      } else if (checkboxes[i].checked == false) {
+         checkboxes.border = '1px solid red';
+         return false;
+      }
+   }
+   
+}
+
+
 // event listner for submition with ifs for validation
  form.addEventListener('submit', (e) => {
-       if(!nameValidator()){
+       
+   if(!nameValidator()){
          e.preventDefault();
          console.log(`name validator prevented default submission`);
        }
-       if(!emailValidator()){
-         e.preventDefault();
-         console.log(`name validator prevented default submission`);
+       
+   if(!emailValidator()){
+      e.preventDefault();
+         console.log(`mail validator prevented default submission`);
        }
-   console.log('Submit handler is functional!');
+
+   if(!checkboxValidator()){
+      e.preventDefault();
+         console.log(`checkbox name validator prevented default submission`);
+      }    
+   // console.log('Submit handler is functional!');
  });
-//Gitlens Test
