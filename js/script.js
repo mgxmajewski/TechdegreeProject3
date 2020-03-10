@@ -57,11 +57,16 @@ designList.addEventListener('change', (e) => {
 
 //checkboxes delcaring variables ()
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-console.log(checkboxes);
+const checkboxDiv = document.querySelector('.activities');
+const totalCostDiv = document.createElement('p');
 let totalCost = 0;
+checkboxDiv.appendChild(totalCostDiv);
+totalCostDiv.innerHTML = totalCost;
+console.log(checkboxes);
+
 
 //
-document.querySelector('.activities').addEventListener('change', (e) => {
+checkboxDiv.addEventListener('change', (e) => {
 const clicked = e.target;
 const clickedTime = clicked.getAttribute('data-day-and-time');
 const clickedCost = parseInt(clicked.getAttribute('data-cost'));
@@ -71,7 +76,6 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
   } else { 
      totalCost -= clickedCost
   }
-  
   for (let i = 0; i < checkboxes.length; i++) {
     const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
     if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
@@ -88,4 +92,5 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
    //    totalCost += clickedCost;
    //  } 
    // }
+   totalCostDiv.innerHTML = "Total: $" + totalCost;
 });
