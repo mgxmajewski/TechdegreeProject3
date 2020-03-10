@@ -121,5 +121,28 @@ for (let i = 0; i < payment.length; i++){
 
    }
 }
-
 });
+// Validation 
+const form = document.querySelector("form");
+const nameValidator = () => {
+   const nameVal = name.value;
+   console.log(nameVal);
+   if (nameVal.length > 0) {
+     return true;
+   } else {
+     name.style.border = '3px solid red';
+     return false;
+   } 
+ }
+
+
+
+
+// event listner for submition with ifs for validation
+ form.addEventListener('submit', (e) => {
+       if(!nameValidator()){
+         e.preventDefault();
+         console.log(`name validator prevented default submission`);
+       }
+   console.log('Submit handler is functional!');
+ });
