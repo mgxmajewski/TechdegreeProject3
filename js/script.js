@@ -40,7 +40,7 @@ designList.addEventListener('change', (e) => {
       color[4].style.display="none";
       color[5].style.display="none";
       color[6].style.display="none";
-      console.log('1st loop');
+      // console.log('1st loop');
      } else if (clicked === 'heart js'){
       color[0].style.display="none";
       color[4].selected = true;
@@ -50,7 +50,7 @@ designList.addEventListener('change', (e) => {
       color[4].style.display="";
       color[5].style.display="";
       color[6].style.display="";
-      console.log('2nd loop');
+      // console.log('2nd loop');
      }
   }
 });
@@ -68,6 +68,7 @@ totalCostDiv.innerHTML = "Total: $" + totalCost;
 
 //
 checkboxDiv.addEventListener('change', (e) => {
+// checkboxValidator();
 const clicked = e.target;
 const clickedTime = clicked.getAttribute('data-day-and-time');
 const clickedCost = parseInt(clicked.getAttribute('data-cost'));
@@ -156,15 +157,20 @@ const nameValidator = () => {
 // checkbox (at leas one) validation
 const checkboxValidator = () => {
    for (let i = 0; i < checkboxes.length; i++){
-      if (checkboxes[i].checked == true) {
+      if (checkboxes[i].checked) {
          return true;
-      } else if (checkboxes[i].checked == false) {
-         checkboxes.border = '1px solid red';
-         return false;
-      }
+      } 
+      
    }
-   
+   return false;
 }
+
+// card payment validation
+const cardNumber = document.getElementById('cc-num');
+const zip = document.getElementById('zip');
+const cvv = document.getElementById('cvv');
+const expMonth = document.getElementById('exp-month');
+const expYear = document.getElementById('exp-year');
 
 
 // event listner for submition with ifs for validation
