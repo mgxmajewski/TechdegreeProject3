@@ -4,6 +4,7 @@ name.focus();
 const jobRole = document.getElementById("other-title");
 jobRole.style.display = 'none';
 
+
 // Declaring variables for T-Shirt Info Dropdown scripti
 const designList = document.getElementById("design");
 const design = designList.getElementsByTagName('option');
@@ -183,7 +184,47 @@ const cvv = document.getElementById('cvv');
 const expMonth = document.getElementById('exp-month');
 const expYear = document.getElementById('exp-year');
 
+const cardNumberRegX = /^\d{13,16}$/;
+const zipRegX = /^\d{5}$/;
+const cvvRegX = /^\d{3}$/;
 
+
+// cardNumber.addEventListener('change', (e) =>{
+
+// });
+   
+   
+   
+const cardValidator = () => {
+   let cardNumberInput = cardNumber.value;
+   if (cardNumberRegX.test(cardNumberInput)) {
+         console.log(cardNumberInput); 
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+const zipValidator = () => {
+   let zipInput = zip.value;
+   if (zipRegX.test(zipInput)) {
+         console.log(zipInput); 
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+const cvvValidator = () => {
+   let cvvInput = cvv.value;
+   if (cvvRegX.test(cvvInput)) {
+         console.log(cvvInput); 
+         return true;
+      } else {
+         return false;
+      }
+   }
+// console.log(cardValidation());
 // event listner for submition with ifs for validation
  form.addEventListener('submit', (e) => {
        
@@ -203,6 +244,19 @@ const expYear = document.getElementById('exp-year');
          console.log(`checkbox name validator prevented default submission`);
       }
 
-   
+   if(!cardValidator()){
+      e.preventDefault();
+         console.log(`card validator prevented default submission`);
+         } 
+
+   if(!zipValidator()){
+      e.preventDefault();
+         console.log(`card validator prevented default submission`);
+         }      
+
+   if(!cvvValidator()){
+      e.preventDefault();
+         console.log(`card validator prevented default submission`);
+         } 
    // console.log('Submit handler is functional!');
  });
