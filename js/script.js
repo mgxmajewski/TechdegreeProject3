@@ -59,13 +59,18 @@ designList.addEventListener('change', (e) => {
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const checkboxDiv = document.querySelector('.activities');
 const totalCostDiv = document.createElement('p');
+
 let totalCost = 0;
 checkboxDiv.appendChild(totalCostDiv);
 totalCostDiv.innerHTML = "Total: $" + totalCost;
 
+const checkboxVal = document.createElement('p');
+checkboxDiv.appendChild(checkboxVal);
+checkboxVal.innerHTML = "*check minimum one chechbox";
+checkboxVal.style.color = "red";
+checkboxVal.style.display = 'none';
+
 // console.log(checkboxes);
-
-
 //
 checkboxDiv.addEventListener('change', (e) => {
 // checkboxValidator();
@@ -75,20 +80,27 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
   // loop through all checkboxes to exclude conflicts - using logic from warmup 'checkboxes'
   if (clicked.checked){
    totalCost += clickedCost;
-  } else { 
-     totalCost -= clickedCost
+   // checkboxVal.style.display = 'none';
+  } else {  
+   totalCost -= clickedCost
   }
   for (let i = 0; i < checkboxes.length; i++) {
     const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
     if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
         if(clicked.checked) {
-          checkboxes[i].disabled = true;
+         checkboxes[i].disabled = true;
       } else {
-      checkboxes[i].disabled = false;
+         checkboxes[i].disabled = false;
       }
     }
    }
    totalCostDiv.innerHTML = "Total: $" + totalCost;
+   // adding loop for validation (think it's better nto to create another event listner)
+   if (totalCost == 0){
+      checkboxVal.style.display = '';
+   } else {
+      checkboxVal.style.display = 'none';
+   }
 });
 
 // payment section
@@ -118,7 +130,6 @@ for (let i = 0; i < payment.length; i++){
       creditCardDiv.style.display = 'none';
       payPalDiv.style.display = 'none';
       bitcoinDiv.style.display = '';
-
    }
 }
 });
@@ -159,10 +170,10 @@ const checkboxValidator = () => {
    for (let i = 0; i < checkboxes.length; i++){
       if (checkboxes[i].checked) {
          return true;
-      } 
-      
+      } else if (checkboxes[i].checked)
+        return false;
    }
-   return false;
+   
 }
 
 // card payment validation
@@ -184,11 +195,14 @@ const expYear = document.getElementById('exp-year');
    if(!emailValidator()){
       e.preventDefault();
          console.log(`mail validator prevented default submission`);
-       }
+       } 
 
    if(!checkboxValidator()){
       e.preventDefault();
+      checkboxVal.style.display = '';
          console.log(`checkbox name validator prevented default submission`);
-      }    
+      }
+
+   
    // console.log('Submit handler is functional!');
  });
