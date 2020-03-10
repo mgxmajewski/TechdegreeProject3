@@ -135,9 +135,6 @@ const nameValidator = () => {
    } 
  }
 
-
-
-
 // event listner for submition with ifs for validation
  form.addEventListener('submit', (e) => {
        if(!nameValidator()){
@@ -146,3 +143,4 @@ const nameValidator = () => {
        }
    console.log('Submit handler is functional!');
  });
+//Gitlens Test
