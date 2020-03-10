@@ -106,6 +106,8 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
 
 // payment section
 const payment = document.getElementById('payment');
+const chosenPayment = payment.value;
+console.log(chosenPayment);
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
