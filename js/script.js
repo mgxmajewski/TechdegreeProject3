@@ -62,7 +62,7 @@ const totalCostDiv = document.createElement('p');
 let totalCost = 0;
 checkboxDiv.appendChild(totalCostDiv);
 totalCostDiv.innerHTML = totalCost;
-console.log(checkboxes);
+// console.log(checkboxes);
 
 
 //
@@ -86,11 +86,29 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
       }
     }
    }
-   console.log(totalCost);
+   // console.log(totalCost);
    // for (let i = 0; i < checkboxes.length; i++) {
    //  if(clicked.checked) {
    //    totalCost += clickedCost;
    //  } 
    // }
    totalCostDiv.innerHTML = "Total: $" + totalCost;
+});
+// payment section
+const payment = document.getElementById('payment');
+const creditCardDiv = document.getElementById('credit-card');
+const payPalDiv = document.getElementById('paypal');
+const bitcoinDiv = document.getElementById('bitcoin');
+console.log(payment[0]);
+
+payment.addEventListener('change', (e) =>{
+const clicked = e.target.value;
+console.log(clicked);
+payment[0].style.display = "none";
+for (let i = 0; i < payment.length; i++){
+   if (clicked == "credit card") {
+      payPalDiv.style.display = 'none';
+   }
+}
+
 });
