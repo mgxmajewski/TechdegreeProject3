@@ -61,7 +61,7 @@ const checkboxDiv = document.querySelector('.activities');
 const totalCostDiv = document.createElement('p');
 let totalCost = 0;
 checkboxDiv.appendChild(totalCostDiv);
-totalCostDiv.innerHTML = totalCost;
+totalCostDiv.innerHTML = "Total: $" + totalCost;
 
 // console.log(checkboxes);
 
@@ -96,6 +96,9 @@ const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
 // console.log(payment[0]);
+payPalDiv.style.display = 'none';
+bitcoinDiv.style.display = 'none';
+
 
 payment.addEventListener('change', (e) =>{
 const clicked = e.target.value;
