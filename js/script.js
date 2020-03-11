@@ -2,9 +2,19 @@
 const name = document.getElementById("name");
 name.focus();
 
-
 const jobRole = document.getElementById("other-title");
 jobRole.style.display = 'none';
+const jobList = document.getElementById("title");
+
+
+jobList.addEventListener('change', (e) => {
+   const clicked = e.target.value;
+   if (clicked == 'other') {
+      jobRole.style.display = '';
+   } else if (clicked !== 'other') {
+      jobRole.style.display = 'none';
+   }
+});
 
 
 // Declaring variables for T-Shirt Info Dropdown scripti
