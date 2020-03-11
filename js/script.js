@@ -1,6 +1,8 @@
 // console.log('test'); - checking if file is conected
 const name = document.getElementById("name");
 name.focus();
+
+
 const jobRole = document.getElementById("other-title");
 jobRole.style.display = 'none';
 
@@ -19,6 +21,7 @@ colorParentNode.prepend(selectTheme);
 selectTheme.indexOf = 0;
 color[0].selected = true;
 // Here hidding all 'Color options'
+colorDiv.style.display ="none";
 const hideColors = () => {
 for (let i = 1; i < color.length; i++) {
    color[i].style.display="none";
@@ -107,7 +110,7 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
 // payment section
 const payment = document.getElementById('payment');
 const chosenPayment = payment.value;
-console.log(chosenPayment);
+
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
@@ -115,11 +118,12 @@ const bitcoinDiv = document.getElementById('bitcoin');
 payPalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
-
+payment[1].selected = true;
+payment[0].style.display = "none";
+console.log(chosenPayment);
 payment.addEventListener('change', (e) =>{
 const clicked = e.target.value;
 console.log(clicked);
-payment[0].style.display = "none";
 for (let i = 0; i < payment.length; i++){
    if (clicked == "credit card") {
       creditCardDiv.style.display = '';
