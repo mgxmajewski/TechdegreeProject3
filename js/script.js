@@ -183,28 +183,44 @@ emailParentNode.appendChild(emailNotValid);
 // emailNotValid.style.color = "red";
 // console.log(emailNotValid);
 emailNotValid.style.display = "none";
+// source https://emailregex.com/
 const mailRegX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
 email.addEventListener('keyup', (e) => {
    let typed = e.target.value;
-   // const atIndex = typed.indexOf('@');
-   // const dotIndex = typed.lastIndexOf('.');
    console.log(typed);
+   let atIndex = typed.indexOf('@');
+   let dotIndex = typed.indexOf('.');
+   console.log(atIndex, dotIndex);
    if (typed.length == 0) {
       emailNotValid.style.display = "";
       emailNotValid.style.color = "red";
-      emailNotValid.innerHTML = "Can't be empty";
+      emailNotValid.innerHTML = "You can't submit empty email adress";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && atIndex < 0 && dotIndex < 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no '@' & '.' in the adress";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && dotIndex < 0 && atIndex > 0)  {
+      emailNotValid.style.display = "";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no '.' in the adress";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && dotIndex > 0 && atIndex < 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no @ in the adress";
       email.style.border = '3px solid red';
    } else if (mailRegX.test(typed) == false) {
       emailNotValid.style.display = "";
-      emailNotValid.style.color = "darkorange";
-      emailNotValid.innerHTML = "Provie valid mail";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail";
       email.style.border = '3px solid red';
    } else if (mailRegX.test(typed)) {
       emailNotValid.style.display = "";
       emailNotValid.style.color = "Green";
-      emailNotValid.innerHTML = "Good mail";
+      emailNotValid.innerHTML = "Email is valid, thank you!";
       email.style.border = '2px solid rgb(111, 157, 220)';
       } 
 });
