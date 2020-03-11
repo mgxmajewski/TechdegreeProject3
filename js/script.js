@@ -1,12 +1,98 @@
-// console.log('test'); - checking if file is conected
+/******************************************************
+* 
+*     NAME FOCUS, VALIDATION ON SUBMITION
+*                
+*******************************************************/
+// name subsection
 const name = document.getElementById("name");
 name.focus();
+const nameRegX = /^[a-zA-Z\-]+$/;
+const nameValidator = () => {
+   const nameVal = name.value;
+   console.log(nameVal);
+   if (nameRegX.test(nameVal)) {
+     return true;
+   } else {
+     name.style.border = '3px solid red';
+     return false;
+   } 
+ }
+
+/******************************************************
+* 
+*     EMAIL LIVE MESSAGES - KEYUP EVENT LISTENER
+*                         &
+*              VALIDATION ON SUBMITION 
+*
+*******************************************************/
+const email = document.getElementById('mail');
+const emailParentNode = document.getElementsByTagName('label')[1];
+const emailNotValid = document.createElement('p');
+emailParentNode.appendChild(emailNotValid);
+emailNotValid.style.display = "none";
+// source of regex https://emailregex.com/
+const mailRegX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+email.addEventListener('keyup', (e) => {
+   let typed = e.target.value;
+   console.log(typed);
+   let atIndex = typed.indexOf('@');
+   let dotIndex = typed.indexOf('.');
+   console.log(atIndex, dotIndex);
+   if (typed.length == 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "red";
+      emailNotValid.innerHTML = "You can't submit empty email address";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && atIndex < 0 && dotIndex < 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no '@' & '.' in the address";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && dotIndex < 0 && atIndex > 0)  {
+      emailNotValid.style.display = "";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no '.' in the address";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false && dotIndex > 0 && atIndex < 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail, there is no @ in the address";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "black";
+      emailNotValid.innerHTML = "Please, provide valid mail";
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed)) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "Green";
+      emailNotValid.innerHTML = "Email is valid, thank you!";
+      email.style.border = '2px solid rgb(111, 157, 220)';
+      } 
+});
+// validation on submition
+const emailValidator = () => {
+   const emailValue = email.value;
+   console.log(emailValue);
+     if (mailRegX.test(emailValue)) {
+         return true;
+     } else {
+         mail.style.border = '3px solid red';
+         emailNotValid.style.color = "red";   
+         emailNotValid.style.display = "";
+         emailNotValid.innerHTML = "You can't submit empty email address";
+         return false;
+     }
+   }
+
+/******************************************************
+* 
+*     JOB ROLE DISPLAY      
+*
+*******************************************************/
 
 const jobRole = document.getElementById("other-title");
 jobRole.style.display = 'none';
 const jobList = document.getElementById("title");
-
-
 jobList.addEventListener('change', (e) => {
    const clicked = e.target.value;
    if (clicked == 'other') {
@@ -16,6 +102,11 @@ jobList.addEventListener('change', (e) => {
    }
 });
 
+/******************************************************
+* 
+*     T-SHIRT THEME & COLOR DROPLIST DISPLAY  
+*
+*******************************************************/
 
 // Declaring variables for T-Shirt Info Dropdown 
 const designList = document.getElementById("design");
@@ -39,7 +130,9 @@ for (let i = 1; i < color.length; i++) {
    }
 };
 hideColors();
+
 // Here adding to 'Color options' - "Please select a T-shirt theme"
+// left some features in case exceed "color" hidding was removed
 designList.addEventListener('change', (e) => {
    design[0].style.display="none";
    colorDiv.style.display ="";
@@ -70,32 +163,35 @@ designList.addEventListener('change', (e) => {
   }
 });
 
+/******************************************************
+* 
+*     CHECKBOX EXCLUSION WHILE TIME CONFLICT
+*                      &
+*              COST CALCULATION    
+*
+*******************************************************/
+
 //checkboxes delcaring variables ()
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const checkboxDiv = document.querySelector('.activities');
 const totalCostDiv = document.createElement('p');
-
 let totalCost = 0;
 checkboxDiv.appendChild(totalCostDiv);
 totalCostDiv.innerHTML = "Total: $" + totalCost;
-
 const checkboxVal = document.createElement('p');
 checkboxDiv.appendChild(checkboxVal);
 checkboxVal.innerHTML = "*check minimum one chechbox";
 checkboxVal.style.color = "red";
 checkboxVal.style.display = 'none';
 
-// console.log(checkboxes);
-//
+// check box handler - evenlistner 
 checkboxDiv.addEventListener('change', (e) => {
-// checkboxValidator();
 const clicked = e.target;
 const clickedTime = clicked.getAttribute('data-day-and-time');
 const clickedCost = parseInt(clicked.getAttribute('data-cost'));
   // loop through all checkboxes to exclude conflicts - using logic from warmup 'checkboxes'
   if (clicked.checked){
    totalCost += clickedCost;
-   // checkboxVal.style.display = 'none';
   } else {  
    totalCost -= clickedCost
   }
@@ -110,7 +206,7 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
     }
    }
    totalCostDiv.innerHTML = "Total: $" + totalCost;
-   // adding loop for validation (think it's better nto to create another event listner)
+   // adding massage if cost is 0
    if (totalCost == 0){
       checkboxVal.style.display = '';
    } else {
@@ -118,15 +214,30 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
    }
 });
 
+// checkbox (at leas one) validation on submition
+const checkboxValidator = () => {
+   for (let i = 0; i < checkboxes.length; i++){
+      if (checkboxes[i].checked) {
+         return true;
+      } else if (checkboxes[i].checked)
+        return false;
+   }
+   
+}
+
+/******************************************************
+* 
+*     PAYMENT OPTION DISPLAY 
+*         
+*******************************************************/
+
 // payment section
 const payment = document.getElementById('payment');
 payment.removeChild(payment[0]);
 const chosenPayment = payment.value;
-
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
-// console.log(payment[0]);
 payPalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
@@ -154,121 +265,21 @@ for (let i = 0; i < payment.length; i++){
 }
 });
 
-// Validation 
-
-const form = document.querySelector("form");
-
-//name validation
-const nameValidator = () => {
-   const nameVal = name.value;
-   console.log(nameVal);
-   if (nameVal.length > 0) {
-     return true;
-   } else {
-     name.style.border = '3px solid red';
-     return false;
-   } 
- }
-
-// email validation
-
-
-
-const email = document.getElementById('mail');
-const emailParentNode = document.getElementsByTagName('label')[1];
-
-const emailNotValid = document.createElement('p');
-emailParentNode.appendChild(emailNotValid);
-// emailNotValid.innerHTML = "*Can't be empty";
-// emailNotValid.style.color = "red";
-// console.log(emailNotValid);
-emailNotValid.style.display = "none";
-// source https://emailregex.com/
-const mailRegX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-
-email.addEventListener('keyup', (e) => {
-   let typed = e.target.value;
-   console.log(typed);
-   let atIndex = typed.indexOf('@');
-   let dotIndex = typed.indexOf('.');
-   console.log(atIndex, dotIndex);
-   if (typed.length == 0) {
-      emailNotValid.style.display = "";
-      emailNotValid.style.color = "red";
-      emailNotValid.innerHTML = "You can't submit empty email adress";
-      email.style.border = '3px solid red';
-   } else if (mailRegX.test(typed) == false && atIndex < 0 && dotIndex < 0) {
-      emailNotValid.style.display = "";
-      emailNotValid.style.color = "black";
-      emailNotValid.innerHTML = "Please, provide valid mail, there is no '@' & '.' in the adress";
-      email.style.border = '3px solid red';
-   } else if (mailRegX.test(typed) == false && dotIndex < 0 && atIndex > 0)  {
-      emailNotValid.style.display = "";
-      emailNotValid.innerHTML = "Please, provide valid mail, there is no '.' in the adress";
-      email.style.border = '3px solid red';
-   } else if (mailRegX.test(typed) == false && dotIndex > 0 && atIndex < 0) {
-      emailNotValid.style.display = "";
-      emailNotValid.style.color = "black";
-      emailNotValid.innerHTML = "Please, provide valid mail, there is no @ in the adress";
-      email.style.border = '3px solid red';
-   } else if (mailRegX.test(typed) == false) {
-      emailNotValid.style.display = "";
-      emailNotValid.style.color = "black";
-      emailNotValid.innerHTML = "Please, provide valid mail";
-      email.style.border = '3px solid red';
-   } else if (mailRegX.test(typed)) {
-      emailNotValid.style.display = "";
-      emailNotValid.style.color = "Green";
-      emailNotValid.innerHTML = "Email is valid, thank you!";
-      email.style.border = '2px solid rgb(111, 157, 220)';
-      } 
-});
-
- const emailValidator = () => {
-   const emailValue = email.value;
-   console.log(emailValue);
-     const atIndex = emailValue.indexOf('@');
-     const dotIndex = emailValue.lastIndexOf('.');
-   //   console.log(atIndex, dotIndex);
-     if (mailRegX.test(emailValue)) {
-         return true;
-     } else {
-         return false;
-     }
-   }
-
-
-
-// checkbox (at leas one) validation
-const checkboxValidator = () => {
-   for (let i = 0; i < checkboxes.length; i++){
-      if (checkboxes[i].checked) {
-         return true;
-      } else if (checkboxes[i].checked)
-        return false;
-   }
-   
-}
-
-// card payment validation
+/******************************************************
+* 
+*     CARD PAYMENT VALIDATION ON SUBMITION      
+*
+*******************************************************/
 const cardNumber = document.getElementById('cc-num');
 const zip = document.getElementById('zip');
 const cvv = document.getElementById('cvv');
 const expMonth = document.getElementById('exp-month');
 const expYear = document.getElementById('exp-year');
-
+// Regexes to difine expected input
 const cardNumberRegX = /^\d{13,16}$/;
 const zipRegX = /^\d{5}$/;
 const cvvRegX = /^\d{3}$/;
-
-
-// cardNumber.addEventListener('change', (e) =>{
-
-// });
-   
-   
-   
+// card number validator
 const cardValidator = () => {
    let cardNumberInput = cardNumber.value;
    if (cardNumberRegX.test(cardNumberInput)) {
@@ -280,7 +291,7 @@ const cardValidator = () => {
          return false;
       }
    }
-
+// zip number validator
 const zipValidator = () => {
    let zipInput = zip.value;
    if (zipRegX.test(zipInput)) {
@@ -292,7 +303,7 @@ const zipValidator = () => {
          return false;
       }
    }
-
+// cvv number validator
 const cvvValidator = () => {
    let cvvInput = cvv.value;
    if (cvvRegX.test(cvvInput)) {
@@ -304,9 +315,15 @@ const cvvValidator = () => {
          return false;
       }
    }
-// console.log(cardValidation());
-// event listner for submition with ifs for validation
- form.addEventListener('submit', (e) => {
+
+/******************************************************
+* 
+*     FORM SUBMIT VALIDATORS 
+*
+*******************************************************/
+const form = document.querySelector("form");
+
+form.addEventListener('submit', (e) => {
   
    if(!nameValidator()){
          e.preventDefault();
@@ -323,7 +340,8 @@ const cvvValidator = () => {
       checkboxVal.style.display = '';
          console.log(`checkbox name validator prevented default submission`);
       }
-const CardValue = payment.value;
+//declaring local variable so card isn't validated if PayPAl or Bitcoin selected
+const CardValue = payment.value; 
    if (CardValue == "credit card") {
       if(!cardValidator()){
          e.preventDefault();
