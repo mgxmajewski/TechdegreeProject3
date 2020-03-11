@@ -121,7 +121,7 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
 // payment section
 const payment = document.getElementById('payment');
 const chosenPayment = payment.value;
-
+payment[1].selected = true;
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
@@ -129,8 +129,8 @@ const bitcoinDiv = document.getElementById('bitcoin');
 payPalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
-payment[1].selected = true;
 payment[0].style.display = "none";
+payment[1].selected = true;
 console.log(chosenPayment);
 payment.addEventListener('change', (e) =>{
 const clicked = e.target.value;
@@ -140,14 +140,17 @@ for (let i = 0; i < payment.length; i++){
       creditCardDiv.style.display = '';
       payPalDiv.style.display = 'none';
       bitcoinDiv.style.display = 'none';
+      payment[1].selected = true;
    } else if (clicked == "paypal") {
       payPalDiv.style.display = '';
       creditCardDiv.style.display = 'none';
       bitcoinDiv.style.display = 'none';
+      payment[2].selected = true;
    } else if (clicked == "bitcoin") {
       creditCardDiv.style.display = 'none';
       payPalDiv.style.display = 'none';
       bitcoinDiv.style.display = '';
+      payment[3].selected = true;
    }
 }
 });
@@ -173,7 +176,6 @@ const nameValidator = () => {
 
 
 const email = document.getElementById('mail');
-const emailValue = email.value;
 const emailParentNode = document.getElementsByTagName('label')[1];
 
 const emailNotValid = document.createElement('p');
@@ -182,36 +184,41 @@ emailParentNode.appendChild(emailNotValid);
 // emailNotValid.style.color = "red";
 // console.log(emailNotValid);
 emailNotValid.style.display = "none";
+const mailRegX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
 email.addEventListener('keyup', (e) => {
-   const typed = e.target.value;
-   const atIndex = typed.indexOf('@');
-   const dotIndex = typed.lastIndexOf('.');
+   let typed = e.target.value;
+   // const atIndex = typed.indexOf('@');
+   // const dotIndex = typed.lastIndexOf('.');
    console.log(typed);
    if (typed.length == 0) {
       emailNotValid.style.display = "";
       emailNotValid.style.color = "red";
       emailNotValid.innerHTML = "Can't be empty";
-   } else if (typed.length !== 0) {
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed) == false) {
       emailNotValid.style.display = "";
       emailNotValid.style.color = "darkorange";
       emailNotValid.innerHTML = "Provie valid mail";
-      }  if (atIndex > 1 && dotIndex > atIndex+1 ) {
+      email.style.border = '3px solid red';
+   } else if (mailRegX.test(typed)) {
       emailNotValid.style.display = "";
       emailNotValid.style.color = "Green";
       emailNotValid.innerHTML = "Good mail";
+      email.style.border = '2px solid rgb(111, 157, 220)';
       } 
 });
 
  const emailValidator = () => {
-   // console.log(emailValue);
+   const emailValue = email.value;
+   console.log(emailValue);
      const atIndex = emailValue.indexOf('@');
      const dotIndex = emailValue.lastIndexOf('.');
    //   console.log(atIndex, dotIndex);
-     if (atIndex > 1 && dotIndex > atIndex+1 ) {
+     if (mailRegX.test(emailValue)) {
          return true;
      } else {
-         email.style.border = '3px solid red';
          return false;
      }
    }
