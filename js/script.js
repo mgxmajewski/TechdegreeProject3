@@ -154,6 +154,7 @@ for (let i = 0; i < payment.length; i++){
 // Validation 
 
 const form = document.querySelector("form");
+
 //name validation
 const nameValidator = () => {
    const nameVal = name.value;
@@ -168,6 +169,7 @@ const nameValidator = () => {
 
 // email validation
  const email = document.getElementById('mail');
+
  const emailValidator = () => {
    const emailValue = email.value;
    // console.log(emailValue);
@@ -181,6 +183,8 @@ const nameValidator = () => {
          return false;
      }
    }
+
+
 
 // checkbox (at leas one) validation
 const checkboxValidator = () => {
@@ -265,7 +269,7 @@ const cvvValidator = () => {
       checkboxVal.style.display = '';
          console.log(`checkbox name validator prevented default submission`);
       }
-
+if (chosenPayment == "credit card") {
    if(!cardValidator()){
       e.preventDefault();
          console.log(`card validator prevented default submission`);
@@ -280,5 +284,6 @@ const cvvValidator = () => {
       e.preventDefault();
          console.log(`card validator prevented default submission`);
          } 
+      }
    // console.log('Submit handler is functional!');
  });
