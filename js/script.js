@@ -120,8 +120,9 @@ const clickedCost = parseInt(clicked.getAttribute('data-cost'));
 
 // payment section
 const payment = document.getElementById('payment');
+payment.removeChild(payment[0]);
 const chosenPayment = payment.value;
-payment[1].selected = true;
+
 const creditCardDiv = document.getElementById('credit-card');
 const payPalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
@@ -129,28 +130,26 @@ const bitcoinDiv = document.getElementById('bitcoin');
 payPalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
-payment[0].style.display = "none";
-payment[1].selected = true;
-console.log(chosenPayment);
+// console.log(chosenPayment);
 payment.addEventListener('change', (e) =>{
 const clicked = e.target.value;
-console.log(clicked);
+// console.log(clicked);
 for (let i = 0; i < payment.length; i++){
    if (clicked == "credit card") {
       creditCardDiv.style.display = '';
       payPalDiv.style.display = 'none';
       bitcoinDiv.style.display = 'none';
-      payment[1].selected = true;
+      payment[0].selected = true;
    } else if (clicked == "paypal") {
       payPalDiv.style.display = '';
       creditCardDiv.style.display = 'none';
       bitcoinDiv.style.display = 'none';
-      payment[2].selected = true;
+      payment[1].selected = true;
    } else if (clicked == "bitcoin") {
       creditCardDiv.style.display = 'none';
       payPalDiv.style.display = 'none';
       bitcoinDiv.style.display = '';
-      payment[3].selected = true;
+      payment[2].selected = true;
    }
 }
 });
@@ -292,7 +291,7 @@ const cvvValidator = () => {
 // console.log(cardValidation());
 // event listner for submition with ifs for validation
  form.addEventListener('submit', (e) => {
-       
+  
    if(!nameValidator()){
          e.preventDefault();
          console.log(`name validator prevented default submission`);
@@ -308,21 +307,22 @@ const cvvValidator = () => {
       checkboxVal.style.display = '';
          console.log(`checkbox name validator prevented default submission`);
       }
-if (chosenPayment == "credit card") {
-   if(!cardValidator()){
-      e.preventDefault();
-         console.log(`card validator prevented default submission`);
-         } 
+const CardValue = payment.value;
+   if (CardValue == "credit card") {
+      if(!cardValidator()){
+         e.preventDefault();
+            console.log(`card validator prevented default submission`);
+            } 
 
-   if(!zipValidator()){
-      e.preventDefault();
-         console.log(`card validator prevented default submission`);
-         }      
+      if(!zipValidator()){
+         e.preventDefault();
+            console.log(`card validator prevented default submission`);
+            }      
 
-   if(!cvvValidator()){
-      e.preventDefault();
-         console.log(`card validator prevented default submission`);
-         } 
-      }
+      if(!cvvValidator()){
+         e.preventDefault();
+            console.log(`card validator prevented default submission`);
+            } 
+         }
    // console.log('Submit handler is functional!');
  });
