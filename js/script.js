@@ -178,20 +178,29 @@ const emailParentNode = document.getElementsByTagName('label')[1];
 
 const emailNotValid = document.createElement('p');
 emailParentNode.appendChild(emailNotValid);
-emailNotValid.innerHTML = "*Can't be empty";
-emailNotValid.style.color = "red";
+// emailNotValid.innerHTML = "*Can't be empty";
+// emailNotValid.style.color = "red";
 // console.log(emailNotValid);
 emailNotValid.style.display = "none";
 
 email.addEventListener('keyup', (e) => {
    const typed = e.target.value;
+   const atIndex = typed.indexOf('@');
+   const dotIndex = typed.lastIndexOf('.');
    console.log(typed);
    if (typed.length == 0) {
       emailNotValid.style.display = "";
+      emailNotValid.style.color = "red";
       emailNotValid.innerHTML = "Can't be empty";
-   } else {
-      emailNotValid.style.display = "none";
-   }
+   } else if (typed.length !== 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "darkorange";
+      emailNotValid.innerHTML = "Provie valid mail";
+      }  if (atIndex > 1 && dotIndex > atIndex+1 ) {
+      emailNotValid.style.display = "";
+      emailNotValid.style.color = "Green";
+      emailNotValid.innerHTML = "Good mail";
+      } 
 });
 
  const emailValidator = () => {
