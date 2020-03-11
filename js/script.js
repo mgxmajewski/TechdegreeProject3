@@ -17,7 +17,7 @@ jobList.addEventListener('change', (e) => {
 });
 
 
-// Declaring variables for T-Shirt Info Dropdown scripti
+// Declaring variables for T-Shirt Info Dropdown 
 const designList = document.getElementById("design");
 const design = designList.getElementsByTagName('option');
 const color = document.getElementById("color").children;
@@ -30,6 +30,7 @@ selectTheme.innerHTML = "Please select a T-shirt theme";
 colorParentNode.prepend(selectTheme);
 selectTheme.indexOf = 0;
 color[0].selected = true;
+
 // Here hidding all 'Color options'
 colorDiv.style.display ="none";
 const hideColors = () => {
@@ -168,10 +169,32 @@ const nameValidator = () => {
  }
 
 // email validation
- const email = document.getElementById('mail');
+
+
+
+const email = document.getElementById('mail');
+const emailValue = email.value;
+const emailParentNode = document.getElementsByTagName('label')[1];
+
+const emailNotValid = document.createElement('p');
+emailParentNode.appendChild(emailNotValid);
+emailNotValid.innerHTML = "*Can't be empty";
+emailNotValid.style.color = "red";
+// console.log(emailNotValid);
+emailNotValid.style.display = "none";
+
+email.addEventListener('keyup', (e) => {
+   const typed = e.target.value;
+   console.log(typed);
+   if (typed.length == 0) {
+      emailNotValid.style.display = "";
+      emailNotValid.innerHTML = "Can't be empty";
+   } else {
+      emailNotValid.style.display = "none";
+   }
+});
 
  const emailValidator = () => {
-   const emailValue = email.value;
    // console.log(emailValue);
      const atIndex = emailValue.indexOf('@');
      const dotIndex = emailValue.lastIndexOf('.');
